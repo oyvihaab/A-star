@@ -1,4 +1,4 @@
-package Øving2;
+package Ã˜ving2;
 
 
 import java.io.File; 
@@ -24,7 +24,7 @@ public class Board {
 		grid = new BoardNode[ySize][xSize]; 
 		this.xSize = xSize;
 		this.ySize = ySize;
-		File board = new File("C:\\Users\\Øyvind\\Desktop\\boards\\"+boardname+".txt"); 
+		File board = new File("C:\\Users\\Ã˜yvind\\Desktop\\boards\\"+boardname+".txt"); 
 		Scanner sc = new Scanner(board);
 		for (int y=0; y<ySize; y++) {
 			String str = sc.nextLine(); 
@@ -60,21 +60,21 @@ public class Board {
 
 	//Kalkulering
 
-	//Bruker Manhattan-distance til å regne ut f, g, h
+	//Bruker Manhattan-distance til Ã¥ regne ut f, g, h
 	public static void calculate(BoardNode c, BoardNode start, BoardNode end) {
 
-		// g - avstand gått
+		// g - avstand gÃ¥tt
 		if(c.parent != null) {
 			c.g = c.parent.g + c.cost;
 		} else {
 			c.g = (int) (Math.abs(c.getX() - start.getX()) + Math.abs(c.getY() - start.getY()));
 		}
 
-		//h - estimert avstand til mål
+		//h - estimert avstand til mÃ¥l
 		c.h = (int) (Math.abs(c.getX() - end.getX()) + Math.abs(c.getY() - end.getY()));
 
-		//f = summen av g og h, den verdien man avgjør hvilken som er den neste (beste)
-		//som skal besøkes i OPEN
+		//f = summen av g og h, den verdien man avgjÃ¸r hvilken som er den neste (beste)
+		//som skal besÃ¸kes i OPEN
 		c.f = c.g + c.h;
 	}
 	
@@ -86,7 +86,7 @@ public class Board {
 
 			System.out.println("WINNER");
 
-			//går tilbake gjennom alle foreldre til vinnernoden, og setter de til 'O'
+			//gÃ¥r tilbake gjennom alle foreldre til vinnernoden, og setter de til 'O'
 			while(c.parent != null) {
 				c.parent.type = 'O';
 				c = c.parent;
@@ -94,7 +94,7 @@ public class Board {
 		}
 	}
 
-	//AGENDA LOOP
+	//LOOP
 
 	ArrayList<BoardNode> open = new ArrayList<BoardNode>(); 
 	ArrayList<BoardNode> closed = new ArrayList<BoardNode>();
@@ -107,14 +107,14 @@ public class Board {
 		//legger startnoden til i open-lista
 		open.add(start);
 		
-		//setter current => c og regner ut f,g(kostnad for å komme hit),h(estimert kostnad til mål)
-		//mens open ikke er tom, så vil løkken fortsette. 
+		//setter current => c og regner ut f,g(kostnad for Ã¥ komme hit),h(estimert kostnad til mÃ¥l)
+		//mens open ikke er tom, sÃ¥ vil lÃ¸kken fortsette. 
 		while (!open.isEmpty()) {
 			loopCount++;
 			System.out.println(" - - Ny iterasjon i while "+loopCount+"");
 			BoardNode c = open.get(0);
 			calculate(c,start,end);
-			//går gjennom lista med noder i open. 
+			//gÃ¥r gjennom lista med noder i open. 
 			for(BoardNode node: open) {
 				
 				//hvis c.h = 0, hopper ut av for-loop, og finner "vinnerveien"
@@ -123,11 +123,11 @@ public class Board {
 				}
 				
 				calculate(node, start, end);
-				//hvis en på open-lista er mindre, blir denne gjort om til current. Den gamle ryddes opp
+				//hvis en pÃ¥ open-lista er mindre, blir denne gjort om til current. Den gamle ryddes opp
 				if(c.f > node.f) {
 					//					node.parent = c;
 					c = node;
-					System.out.println("node på OPEN var mindre enn c, c oppdatert");
+					System.out.println("node pÃ¥ OPEN var mindre enn c, c oppdatert");
 					System.out.println("CURRENT:"+c.x+","+c.y+"");
 				}
 			}
@@ -145,9 +145,9 @@ public class Board {
 				calculateWinnerRoute(c);
 			}
 
-			// går gjennom listen med naboer
+			// gÃ¥r gjennom listen med naboer
 			for(BoardNode node : c.neighbour) {
-				System.out.println("går gjennom liste med naboer");
+				System.out.println("gÃ¥r gjennom liste med naboer");
 				if (node.type == '#' || closed.contains(node)) {
 					System.out.println("har # / er i closed");
 					System.out.println(+node.x+","+node.y+"");
@@ -164,7 +164,7 @@ public class Board {
 
 				//regner ut f med denne c, og sammenligner med forrige f,
 				//hvis c er en bedre parent (ift f),
-				//så oppdateres node sin parent seg og node legges til i OPEN.
+				//sÃ¥ oppdateres node sin parent seg og node legges til i OPEN.
 				else if (node.eval(c, end) < node.f && closed.contains(node)) {
 					System.out.println("evaluerer om nye rute er bedre");
 					open.add(node);
